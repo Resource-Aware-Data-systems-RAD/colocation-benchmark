@@ -2,3 +2,9 @@ loadgen/build/
 libmlperf_loadgen.a
 __pycache__/
 generated/
+venv/
+*.egg-info
+loadgen/*.so
+vision/classification_and_detection/fake_imagenet
+vision/classification_and_detection/*.onnx
+vision/classification_and_detection/*.pth
