@@ -102,21 +102,33 @@ Support for other backends can be easily added.
 
 The following steps are **only** needed if you run the benchmark **without Docker**.
 
-Python 3.5, 3.6 or 3.7 is supported and we recommend to use Anaconda (See [Dockerfile](Dockerfile.cpu) for a minimal Anaconda install).
+Python 3.9 is recommended. The easiest way to install the libraries is using Miniconda:
+```
+conda create -n mlperf python=3.9
+```
 
 Install the desired backend.
 For tensorflow:
 ```
-pip install tensorflow or pip install tensorflow-gpu
+conda install tensorflow or conda install tensorflow-gpu
 ```
 For onnxruntime:
 ```
 pip install onnxruntime or pip install onnxruntime-gpu
 ```
+For pytorch:
+```
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+```
+
+Install extra libraries:
+```
+pip install Cython setuptools pybind11 pycocotools
+```
 
 Build and install the benchmark:
 ```
-cd ../../loadgen; CFLAGS="-std=c++14" python setup.py develop --user; cd ../vision/classification_and_detection
+cd ../../loadgen; CFLAGS="-std=c++14" python setup.py develop; cd ../vision/classification_and_detection
 
 python setup.py develop
 ```
