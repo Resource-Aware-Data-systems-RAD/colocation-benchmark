@@ -6,6 +6,7 @@ venv/
 *.egg-info
 loadgen/*.so
 vision/classification_and_detection/fake_imagenet
+vision/classification_and_detection/openimages_small
 vision/classification_and_detection/*.onnx
 vision/classification_and_detection/*.pth
 vision/classification_and_detection/*.pb

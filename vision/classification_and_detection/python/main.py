@@ -473,6 +473,8 @@ def main():
         backend.max_batchsize = args.max_batchsize
         backend.arena_num = args.threads
         backend.arena_size = 4
+    elif args.backend == "pytorch-native":
+        backend.model_name = args.model_name
 
     # override image format if given
     image_format = args.data_format if args.data_format else backend.image_format()

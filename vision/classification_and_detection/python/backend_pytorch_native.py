@@ -13,6 +13,7 @@ class BackendPytorchNative(backend.Backend):
         self.sess = None
         self.model = None
         self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        self.model_name = "resnet50"
 
     def version(self):
         return torch.__version__
@@ -23,8 +24,17 @@ class BackendPytorchNative(backend.Backend):
     def image_format(self):
         return "NCHW"
 
+    def get_model(self):
+        if self.model_name == "resnet50":
+            return torchvision.models.resnet50()
+        elif self.model_name == "retinanet":
+            return torchvision.models.retinanet_resnet50_fpn()
+        else: 
+            Exception("model not found")
+
     def load(self, model_path, inputs=None, outputs=None):
-        self.model = torch.load(model_path)
+        self.model = self.get_model()
+        self.model.load_state_dict(torch.load(model_path))
         self.model.eval()
         # find inputs from the model if not passed in by config
         if inputs:
@@ -54,4 +64,4 @@ class BackendPytorchNative(backend.Backend):
         feed[key] = torch.tensor(feed[key]).float().to(self.device)
         with torch.no_grad():
             output = self.model(feed[key])
-        return output
+        return [output.cpu().numpy()]
