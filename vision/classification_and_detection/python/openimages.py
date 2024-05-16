@@ -71,7 +71,6 @@ class OpenImages(dataset.Dataset):
             catagory_ids = label_map[a.get("category_id")] if self.use_label_map else a.get("category_id")
             i["category"].append(catagory_ids)
             i["bbox"].append(a.get("bbox"))
-
         for image_id, img in images.items():
             image_name = img["file_name"]
             if len(img["category"])==0 and self.use_label_map: 
@@ -85,7 +84,7 @@ class OpenImages(dataset.Dataset):
                     not_found += 1
                     continue
             else:
-                src = os.path.join(data_path, image_name)
+                src = os.path.join(data_path, "validation/data", image_name)
                 if not os.path.exists(src):
                     # if the image does not exists ignore it
                     not_found += 1
